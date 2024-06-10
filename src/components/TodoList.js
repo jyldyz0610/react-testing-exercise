@@ -5,7 +5,6 @@ const TodoList = () => {
     const [todos, setTodos] = useState([]);
     const [input, setInput] = useState('');
 
-
     useEffect(() => {
         const fetchTodos = async () => {
             try {
@@ -21,8 +20,23 @@ const TodoList = () => {
         fetchTodos();
     }, []);
 
+    const addTodo = () => {
+        if (input.trim() !== '') {
+            setTodos([...todos, { text: input, completed: false }]);
+            setInput('');
+        }
+    };
+
     return (
         <div>
+            <label htmlFor="todoInput">Enter Todo</label>
+            <input
+                id="todoInput"
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+            />
+            <button onClick={addTodo}>Add Todo</button>
             <ul>
                 {todos.map((todo, index) => (
                     <TodoItem key={index} todo={todo} />
